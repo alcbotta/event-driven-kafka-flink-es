@@ -1,26 +1,15 @@
 {
-  "name": "Go",
-  "build": {
-    "dockerfile": "Dockerfile",
-    // Update the VARIANT arg to pick a version of Go
-    "args": {
-      "VARIANT": "1"
-    }
-  },
+  "name": "producer-go",
+  "dockerComposeFile": ["../docker-compose.yml"],
+  "service": "producer",
+  "workspaceFolder": "/workspaces/alcobotta/event-driven-kafka-flink-es/producer",
   "runArgs": ["--cap-add=SYS_PTRACE", "--security-opt", "seccomp=unconfined"],
-  // Set *default* container specific settings.json values on container create.
   "settings": {
     "terminal.integrated.shell.linux": "/bin/bash",
     "go.useGoProxyToCheckForToolUpdates": false,
     "go.gopath": "/go",
     "go.useLanguageServer": true
   },
-  // Add the IDs of extensions you want installed when the container is created.
   "extensions": ["golang.Go"],
-  // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  "forwardPorts": [9000],
-  // Use 'postCreateCommand' to run commands after the container is created.
-  // "postCreateCommand": "go version",
-  // Comment out to connect as root instead.
   "remoteUser": "vscode"
 }

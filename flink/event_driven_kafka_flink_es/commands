@@ -1,0 +1,2 @@
+com.github.alcbotta.event_driven_kafka_flink_es
+mvn archetype:generate -DgroupId=com.github.alcbotta.event_driven_kafka_flink_es -DartifactId=event_driven_kafka_flink_es -DarchetypeArtifactId=maven-archetype-quickstart -DarchetypeVersion=1.4 -DinteractiveMode=false

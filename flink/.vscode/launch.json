@@ -1,0 +1,21 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Debug (Launch) - Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Debug (Launch)-App<event_driven_kafka_flink_es>",
+            "request": "launch",
+            "mainClass": "com.github.alcbotta.event_driven_kafka_flink_es.App",
+            "projectName": "event_driven_kafka_flink_es"
+        }
+    ]
+}

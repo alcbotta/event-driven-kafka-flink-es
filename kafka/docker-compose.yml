@@ -1,4 +1,4 @@
-version: "3.1"
+version: "3.7"
 
 services:
   zookeeper-server:
@@ -9,21 +9,28 @@ services:
       - zookeeper_data:/bitnami
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
+    networks:
+      - eventdriven
   kafka-server:
     image: bitnami/kafka:latest
     ports:
       - 9092:9092
     environment:
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper-server:2181
-      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka-server:9092
       - ALLOW_PLAINTEXT_LISTENER=yes
     depends_on:
       - zookeeper-server
     volumes:
       - kafka_data:/bitnami
-
+    networks:
+      - eventdriven
 volumes:
   zookeeper_data:
     driver: local
   kafka_data:
     driver: local
+
+networks:
+  eventdriven:
+    external: true

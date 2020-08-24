@@ -21,7 +21,7 @@ type Payload struct {
 
 func main() {
 
-	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "host.docker.internal:9092"})
+	p, err := kafka.NewProducer(&kafka.ConfigMap{"bootstrap.servers": "kafka-server:9092"})
 	if err != nil {
 		panic(err)
 	}
@@ -43,7 +43,7 @@ func main() {
 	}()
 
 	r := csv.NewReader(strings.NewReader(in))
-	topic := "car_makers"
+	topic := "car-makers"
 	for {
 		record, err := r.Read()
 		if err == io.EOF {
@@ -68,12 +68,13 @@ func main() {
 			TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
 			Value:          js,
 		}, nil)
-		p.Flush(1000)
+		r := p.Flush(1000)
+		fmt.Println(r)
 	}
 }
 
 // originally from: https://raw.githubusercontent.com/abhionlyone/us-car-models-data/master/2020.csv
-// year,make,model,body_styles
+// year,maker,model,body_styles
 var in string = `
 2020,Acura,ILX,"[""Sedan""]"
 2020,Acura,MDX,"[""SUV""]"

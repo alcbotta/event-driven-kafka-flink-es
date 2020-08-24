@@ -1,0 +1,31 @@
+version: "3.7"
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.8.0
+    ports:
+      - 9200:9200
+    environment:
+      - xpack.security.enabled=false
+      - discovery.type=single-node
+      - cluster.name=es-docker-cluster
+    volumes:
+      - elasticsearch-data:/usr/share/elasticsearch/data
+    networks:
+      - eventdriven
+  kibana:
+    image: docker.elastic.co/kibana/kibana:7.8.0
+    environment:
+      - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+    ports:
+      - 5601:5601
+    depends_on:
+      - elasticsearch
+    networks:
+      - eventdriven
+
+volumes:
+  elasticsearch-data:
+
+networks:
+  eventdriven:
+    external: true

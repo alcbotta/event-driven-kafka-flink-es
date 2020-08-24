@@ -1,0 +1,14 @@
+version: "3.7"
+
+services:
+  flink:
+    build: .
+    command: sleep infinity
+    volumes:
+      - ./:/workspaces/alcobotta/event-driven-kafka-flink-es/flink
+    networks:
+      - eventdriven
+
+networks:
+  eventdriven:
+    external: true
