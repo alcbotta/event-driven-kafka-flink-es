@@ -50,7 +50,7 @@ public class App {
                 });
 
 
-        KeyedStream<Map<String, Object>, String> keydStream =
+        KeyedStream<Map<String, Object>, String> keyedStream =
                 jsonStream.keyBy(new KeySelector<Map<String, Object>, String>() {
                     @Override
                     public String getKey(Map<String, Object> obj) throws Exception {
@@ -77,7 +77,7 @@ public class App {
 
 
         esSinkBuilder.setBulkFlushMaxActions(1);
-        keydStream.addSink(esSinkBuilder.build());
+        keyedStream.addSink(esSinkBuilder.build());
         see.execute("CustomerRegistrationApp");
     }
 }

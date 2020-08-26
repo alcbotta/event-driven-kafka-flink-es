@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/csv"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -23,19 +24,19 @@ type Payload struct {
 func getDataString(year int) (string, error) {
 	resp, err := http.Get(fmt.Sprintf("https://raw.githubusercontent.com/abhionlyone/us-car-models-data/master/%d.csv", year))
 	if err != nil {
-		return "", nil
+		return "", err
 	}
 	defer resp.Body.Close()
 
 	if resp.StatusCode == http.StatusOK {
 		bodyBytes, err := ioutil.ReadAll(resp.Body)
 		if err != nil {
-			log.Fatal(err)
+			return "", err
 		}
 		bodyString := string(bodyBytes)
 		return bodyString, nil
 	}
-	return "", nil
+	return "", errors.New("status is not 200")
 }
 
 func main() {
@@ -91,7 +92,6 @@ func main() {
 				BodyStyle: bs,
 			}
 			js, _ := json.Marshal(pl)
-			fmt.Println(pl)
 			p.Produce(&kafka.Message{
 				TopicPartition: kafka.TopicPartition{Topic: &topic, Partition: kafka.PartitionAny},
 				Value:          js,
